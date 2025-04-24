@@ -1,0 +1,57 @@
+/* Responsive CSS */
+
+/* Mobile */
+@media (max-width: 767px) {
+    .container {
+      width: 100%;
+      padding: 0 15px;
+    }
+    
+    .sidebar {
+      display: none;
+    }
+    
+    .mobile-menu {
+      display: block;
+    }
+    
+    .grid-view {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+      width: 750px;
+      margin: 0 auto;
+    }
+    
+    .sidebar {
+      width: 200px;
+    }
+    
+    .grid-view {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1024px) {
+    .container {
+      width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .sidebar {
+      width: 250px;
+    }
+    
+    .mobile-menu {
+      display: none;
+    }
+    
+    .grid-view {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }

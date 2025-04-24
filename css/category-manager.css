@@ -1,0 +1,43 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container chính */
+  .container-category-manager {
+    width: 90%;
+  }
+  
+  /* Tiêu đề & nút */
+  .container-category-manager h1 {
+    font-size: 28px;
+    color: #212529;
+  }
+  
+  button.btn-sm {
+    min-width: 60px;
+  }
+  
+  /* Bảng */
+  .table th,
+  .table td {
+    vertical-align: middle;
+    font-size: 15px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+  }
+  .nav-link{
+    transition: 0.1s ease;
+  }
+  .nav-link:hover{
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,18 @@
+.container-test-manager {
+    width: 90%;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+button.btn-sm {
+    min-width: 60px;
+}
+.nav-link{
+    transition: 0.1s ease;
+  }
+  .nav-link:hover{
+    font-weight: bold;
+  }

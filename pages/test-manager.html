@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quản lý bài test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/PROJECT/css/test-manager.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark px-4" style="background-color: #520dc2;">
+    <a class="navbar-brand fw-bold text-white" href="#">QuizzForge</a>
+    <div class="ms-auto d-flex gap-3">
+      <a class="nav-link text-white" href="#">Danh mục</a>
+      <a class="nav-link text-white fw-bold" href="#">Bài test</a>
+      <a class="nav-link text-white" href="#">Đăng xuất</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow-1 d-flex justify-content-center align-items-start py-5 bg-light">
+    <div class="container-test-manager border p-4 rounded shadow bg-white w-100" style="max-width: 1100px;">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h1 class="mb-0">Quản lý bài test</h1>
+        <button class="btn btn-primary">Thêm bài test</button>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="d-flex justify-content-end mb-3 gap-2 flex-wrap">
+        <select class="form-select w-auto">
+          <option>Sắp xếp theo</option>
+          <option>Tên A-Z</option>
+          <option>Số câu tăng dần</option>
+        </select>
+        <input type="text" class="form-control w-auto" placeholder="Tìm kiếm theo tên"/>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-responsive">
+        <table class="table table-bordered text-center align-middle table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Tên bài test</th>
+              <th>Danh mục</th>
+              <th>Số câu hỏi</th>
+              <th>Thời gian</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>History Quiz</td><td>📚 Lịch sử</td><td>15</td><td>10 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>2</td><td>Science Challenge</td><td>🧠 Khoa học</td><td>20</td><td>15 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>3</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>4</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>5</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>6</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>7</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>8</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">»</a></li>
+        </ul>
+      </nav>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-3 text-white mt-auto" style="background-color: #520dc2;">
+    © 2025 Quiz App. All rights reserved.
+  </footer>
+</body>
+</html>

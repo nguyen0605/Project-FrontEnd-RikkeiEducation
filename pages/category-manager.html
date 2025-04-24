@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quản lý danh mục</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="/PROJECT/css/category-manager.css">
+  <link rel="stylesheet" href="../css/category-manager.css"> <!-- Link tới CSS -->
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -24,7 +24,7 @@
     <div class="container-category-manager border p-4 rounded shadow bg-white w-100" style="max-width: 900px;">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="mb-0">Quản lý danh mục</h1>
-        <button class="btn btn-primary" onclick="addCategory()">Thêm danh mục</button>
+        <button class="btn btn-primary" onclick="openAddModal()">Thêm danh mục</button>
       </div>
 
       <!-- TABLE -->
@@ -37,25 +37,16 @@
               <th>Hành động</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td>1</td><td>📚 Lịch sử</td><td><button class="btn btn-warning btn-sm me-2" onclick="editCategory(0, '📚 Lịch sử')">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>2</td><td>🧪 Khoa học</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>3</td><td>✏️ Giải trí</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>4</td><td>🏡 Đời sống</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>5</td><td>📚 Lịch sử</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>6</td><td>🧪 Khoa học</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+          <tbody id="categoryTableBody">
+            <!-- Dữ liệu sẽ được điền vào đây bằng JavaScript -->
           </tbody>
         </table>
       </div>
 
       <!-- PAGINATION -->
       <nav class="d-flex justify-content-center">
-        <ul class="pagination">
-          <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">»</a></li>
+        <ul class="pagination" id="pagination">
+          <!-- Pagination sẽ được điền vào đây bằng JavaScript -->
         </ul>
       </nav>
     </div>
@@ -67,40 +58,39 @@
   </footer>
 
   <!-- MODAL thêm danh mục -->
-<div id="addCategoryModal" class="modal-overlay">
-  <div class="modal-content">
-    <h2>Thêm danh mục</h2>
-    <form id="addCategoryForm">
-      <div class="mb-3">
-        <label for="categoryName" class="form-label">Tên danh mục</label>
-        <input type="text" id="categoryName" class="form-control" placeholder="Nhập tên danh mục" required />
-      </div>
-      <div class="d-flex justify-content-end gap-2">
-        <button type="button" class="btn btn-secondary" onclick="closeModal()">Hủy</button>
-        <button type="submit" class="btn btn-primary">Lưu</button>
-      </div>
-    </form>
+  <div id="addCategoryModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Thêm danh mục</h2>
+      <form id="addCategoryForm">
+        <div class="mb-3">
+          <label for="categoryName" class="form-label">Tên danh mục</label>
+          <input type="text" id="categoryName" class="form-control" placeholder="Nhập tên danh mục" required />
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
-<!-- MODAL Sửa danh mục -->
-<div id="editCategoryModal" class="modal-overlay">
-  <div class="modal-content">
-    <h2>Chỉnh sửa danh mục</h2>
-    <form id="editCategoryForm">
-      <div class="mb-3">
-        <label for="editCategoryName" class="form-label">Tên danh mục</label>
-        <input type="text" id="editCategoryName" class="form-control" required />
-      </div>
-      <div class="d-flex justify-content-end gap-2">
-        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Hủy</button>
-        <button type="submit" class="btn btn-primary">Lưu</button>
-      </div>
-    </form>
+  <!-- MODAL Sửa danh mục -->
+  <div id="editCategoryModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Chỉnh sửa danh mục</h2>
+      <form id="editCategoryForm">
+        <div class="mb-3">
+          <label for="editCategoryName" class="form-label">Tên danh mục</label>
+          <input type="text" id="editCategoryName" class="form-control" required />
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
-
-  <script src="../js/category-manager.js"></script>
+  <script src="../js/category-manager.js"></script> 
 </body>
 </html>

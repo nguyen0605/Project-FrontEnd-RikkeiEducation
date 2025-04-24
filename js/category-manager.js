@@ -1,103 +1,143 @@
-function addCategory() {
-    const modal = document.getElementById("addCategoryModal");
-    modal.style.display = "flex"; // Hiển thị modal
-  }
-  
-  function closeModal() {
-    const modal = document.getElementById("addCategoryModal");
-    modal.style.display = "none"; // Ẩn modal
-  }
-  
-  // Đóng modal khi nhấp bên ngoài
-  window.addEventListener("click", function (e) {
-    const modal = document.getElementById("addCategoryModal");
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
+// Dữ liệu danh mục giả lập (bạn có thể thay bằng dữ liệu thực từ server)
+let categories = [
+  { id: 1, name: "📚 Lịch sử" },
+  { id: 2, name: "🧪 Khoa học" },
+  { id: 3, name: "✏️ Giải trí" },
+  { id: 4, name: "🏡 Đời sống" },
+  { id: 5, name: "📚 Lịch sử" },
+  { id: 6, name: "🧪 Khoa học" },
+  { id: 7, name: "✏️ Giải trí" },
+  { id: 8, name: "🏡 Đời sống" },
+  { id: 9, name: "📚 Lịch sử" },
+  { id: 10, name: "🧪 Khoa học" }
+];
+
+const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+let currentPage = 1; // Trang hiện tại
+
+// Hàm hiển thị danh mục
+function renderCategories() {
+  const tbody = document.getElementById('categoryTableBody');
+  tbody.innerHTML = ''; // Xoá các hàng cũ trong bảng
+
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const categoriesToDisplay = categories.slice(startIdx, endIdx);
+
+  categoriesToDisplay.forEach(category => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${category.id}</td>
+      <td>${category.name}</td>
+      <td>
+        <button class="btn btn-warning btn-sm me-2" onclick="openEditModal(${category.id}, '${category.name}')">Sửa</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCategory(${category.id})">Xoá</button>
+      </td>
+    `;
+    tbody.appendChild(row);
   });
-  
-  // Xử lý form khi thêm danh mục
-  document.getElementById("addCategoryForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const categoryName = document.getElementById("categoryName").value.trim();
-    if (categoryName) {
-      alert(`Danh mục "${categoryName}" đã được thêm thành công!`);
-      closeModal();
-      document.getElementById("categoryName").value = ""; // Reset input
-    }
-  })
-
-  function editCategory(categoryId, categoryName) {
-  const modal = document.getElementById("editCategoryModal");
-  const input = document.getElementById("editCategoryName");
-
-  input.value = categoryName; // Hiển thị tên danh mục trong ô nhập liệu
-  modal.style.display = "flex"; // Hiển thị modal
-
-  // Xử lý form khi chỉnh sửa danh mục
-  document.getElementById("editCategoryForm").onsubmit = function (e) {
-    e.preventDefault();
-
-    const updatedName = input.value.trim();
-    if (updatedName) {
-      alert(`Danh mục "${categoryName}" đã được đổi tên thành "${updatedName}"!`);
-      closeEditModal();
-
-      // Cập nhật dữ liệu trên giao diện (tùy chỉnh theo nhu cầu)
-      const row = document.querySelector(`tr[data-id="${categoryId}"] td:nth-child(2)`);
-      if (row) row.textContent = updatedName;
-    }
-  };
 }
 
-function closeEditModal() {
-  const modal = document.getElementById("editCategoryModal");
-  modal.style.display = "none"; // Ẩn modal
-}
+// Hàm hiển thị phân trang
+function renderPagination() {
+  const totalPages = Math.ceil(categories.length / itemsPerPage);
+  const pagination = document.getElementById('pagination');
+  pagination.innerHTML = '';
 
-// Đóng modal khi nhấn bên ngoài
-window.addEventListener("click", function (e) {
-  const modal = document.getElementById("editCategoryModal");
-  if (e.target === modal) {
-    modal.style.display = "none";
+  const prevPageLink = document.createElement('li');
+  prevPageLink.classList.add('page-item');
+  if (currentPage === 1) {
+    prevPageLink.classList.add('disabled');
   }
+  prevPageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage - 1})">«</a>`;
+  pagination.appendChild(prevPageLink);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageLink = document.createElement('li');
+    pageLink.classList.add('page-item');
+    if (i === currentPage) {
+      pageLink.classList.add('active');
+    }
+    pageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+    pagination.appendChild(pageLink);
+  }
+
+  const nextPageLink = document.createElement('li');
+  nextPageLink.classList.add('page-item');
+  if (currentPage === totalPages) {
+    nextPageLink.classList.add('disabled');
+  }
+  nextPageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage + 1})">»</a>`;
+  pagination.appendChild(nextPageLink);
+}
+
+// Hàm thay đổi trang
+function changePage(page) {
+  if (page < 1 || page > Math.ceil(categories.length / itemsPerPage)) return;
+  currentPage = page;
+  renderCategories();
+  renderPagination();
+}
+
+// Hàm mở modal thêm danh mục
+function openAddModal() {
+  const modal = document.getElementById('addCategoryModal');
+  modal.classList.add('open');
+}
+
+// Hàm đóng modal thêm danh mục
+function closeAddModal() {
+  const modal = document.getElementById('addCategoryModal');
+  modal.classList.remove('open');
+}
+
+// Hàm mở modal sửa danh mục
+function openEditModal(id, name) {
+  const modal = document.getElementById('editCategoryModal');
+  document.getElementById('editCategoryName').value = name;
+  modal.classList.add('open');
+  modal.dataset.categoryId = id;
+}
+
+// Hàm đóng modal sửa danh mục
+function closeEditModal() {
+  const modal = document.getElementById('editCategoryModal');
+  modal.classList.remove('open');
+}
+
+// Hàm xử lý lưu sửa danh mục
+document.getElementById('editCategoryForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const modal = document.getElementById('editCategoryModal');
+  const categoryId = modal.dataset.categoryId;
+  const categoryName = document.getElementById('editCategoryName').value;
+
+  const category = categories.find(c => c.id === parseInt(categoryId));
+  if (category) {
+    category.name = categoryName; // Cập nhật tên danh mục
+  }
+
+  closeEditModal();
+  renderCategories();
+  renderPagination();
 });
 
-function editCategory(position, categoryName) {
-    const modal = document.getElementById("editCategoryModal");
-    const input = document.getElementById("editCategoryName");
+// Hàm xử lý thêm danh mục
+document.getElementById('addCategoryForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const categoryName = document.getElementById('categoryName').value;
+
+  const newCategory = {
+    id: categories.length + 1,
+    name: categoryName
+  };
   
-    // Điền tên danh mục vào ô nhập liệu
-    input.value = categoryName;
-  
-    modal.style.display = "flex"; // Hiển thị modal
-  
-    // Xử lý form khi chỉnh sửa danh mục
-    document.getElementById("editCategoryForm").onsubmit = function (e) {
-      e.preventDefault();
-  
-      const updatedName = input.value.trim();
-      if (updatedName) {
-        alert(`Danh mục "${categoryName}" tại vị trí ${position + 1} đã được đổi tên thành "${updatedName}"!`);
-        closeEditModal();
-  
-        // Cập nhật dữ liệu trên giao diện (cập nhật trực tiếp dòng tương ứng)
-        const rows = document.querySelectorAll("tbody tr");
-        rows[position].querySelector("td:nth-child(2)").textContent = updatedName;
-      }
-    };
-  }
-  
-  function closeEditModal() {
-    const modal = document.getElementById("editCategoryModal");
-    modal.style.display = "none"; // Ẩn modal
-  }
-  
-  // Đóng modal khi nhấp bên ngoài
-  window.addEventListener("click", function (e) {
-    const modal = document.getElementById("editCategoryModal");
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-  
+  categories.push(newCategory);
+  closeAddModal();
+  renderCategories();
+  renderPagination();
+});
+
+// Khởi tạo trang ban đầu
+renderCategories();
+renderPagination();

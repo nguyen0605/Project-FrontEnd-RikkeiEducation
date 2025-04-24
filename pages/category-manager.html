@@ -24,7 +24,7 @@
     <div class="container-category-manager border p-4 rounded shadow bg-white w-100" style="max-width: 900px;">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="mb-0">Quản lý danh mục</h1>
-        <button class="btn btn-primary">Thêm danh mục</button>
+        <button class="btn btn-primary" onclick="addCategory()">Thêm danh mục</button>
       </div>
 
       <!-- TABLE -->
@@ -38,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>1</td><td>📚 Lịch sử</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+            <tr><td>1</td><td>📚 Lịch sử</td><td><button class="btn btn-warning btn-sm me-2" onclick="editCategory(0, '📚 Lịch sử')">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
             <tr><td>2</td><td>🧪 Khoa học</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
             <tr><td>3</td><td>✏️ Giải trí</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
             <tr><td>4</td><td>🏡 Đời sống</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
@@ -65,6 +65,41 @@
   <footer class="text-center py-3 text-white mt-auto" style="background-color: #520dc2;">
     © 2025 QuizForge. All rights reserved.
   </footer>
+
+  <!-- MODAL thêm danh mục -->
+<div id="addCategoryModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Thêm danh mục</h2>
+    <form id="addCategoryForm">
+      <div class="mb-3">
+        <label for="categoryName" class="form-label">Tên danh mục</label>
+        <input type="text" id="categoryName" class="form-control" placeholder="Nhập tên danh mục" required />
+      </div>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Hủy</button>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL Sửa danh mục -->
+<div id="editCategoryModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Chỉnh sửa danh mục</h2>
+    <form id="editCategoryForm">
+      <div class="mb-3">
+        <label for="editCategoryName" class="form-label">Tên danh mục</label>
+        <input type="text" id="editCategoryName" class="form-control" required />
+      </div>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Hủy</button>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
   <script src="../js/category-manager.js"></script>
 </body>

@@ -16,3 +16,45 @@ button.btn-sm {
   .nav-link:hover{
     font-weight: bold;
   }
+
+  .modal-overlay {
+    display: none; /* Ẩn modal mặc định */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Khi modal mở ra */
+  .modal-overlay.open {
+    display: flex;
+  }
+  
+  /* Nút hủy và lưu trong modal */
+  .modal-content button {
+    min-width: 80px;
+  }
+  
+  .modal-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 10px;
+  }
+  

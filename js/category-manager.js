@@ -1,5 +1,5 @@
-// Dữ liệu danh mục giả lập (bạn có thể thay bằng dữ liệu thực từ server)
-let categories = [
+// Dữ liệu danh mục giả lập
+let categories = JSON.parse(localStorage.getItem('categories')) || [
   { id: 1, name: "📚 Lịch sử" },
   { id: 2, name: "🧪 Khoa học" },
   { id: 3, name: "✏️ Giải trí" },
@@ -31,7 +31,7 @@ function renderCategories() {
       <td>${category.name}</td>
       <td>
         <button class="btn btn-warning btn-sm me-2" onclick="openEditModal(${category.id}, '${category.name}')">Sửa</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteCategory(${category.id})">Xoá</button>
+        <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${category.id})">Xoá</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -117,6 +117,7 @@ document.getElementById('editCategoryForm').addEventListener('submit', function 
     category.name = categoryName; // Cập nhật tên danh mục
   }
 
+  saveCategoriesToLocalStorage();
   closeEditModal();
   renderCategories();
   renderPagination();
@@ -131,12 +132,49 @@ document.getElementById('addCategoryForm').addEventListener('submit', function (
     id: categories.length + 1,
     name: categoryName
   };
-  
+
   categories.push(newCategory);
+  saveCategoriesToLocalStorage();
   closeAddModal();
   renderCategories();
   renderPagination();
 });
+
+// Modal xóa danh mục
+function openDeleteModal(id) {
+  const deleteModal = document.getElementById('deleteCategoryModal');
+  deleteModal.classList.add('open');
+
+  // Khi bấm "Có", xóa danh mục
+  document.getElementById('confirmDelete').onclick = function () {
+    deleteCategory(id);
+    closeDeleteModal();
+  };
+
+  // Khi bấm "Không", đóng modal mà không làm gì
+  document.getElementById('cancelDelete').onclick = function () {
+    closeDeleteModal();
+  };
+}
+
+// Xóa danh mục
+function deleteCategory(id) {
+  categories = categories.filter(category => category.id !== id);
+  saveCategoriesToLocalStorage();
+  renderCategories();
+  renderPagination();
+}
+
+// Đóng modal xóa
+function closeDeleteModal() {
+  const deleteModal = document.getElementById('deleteCategoryModal');
+  deleteModal.classList.remove('open');
+}
+
+// Lưu danh mục vào localStorage
+function saveCategoriesToLocalStorage() {
+  localStorage.setItem('categories', JSON.stringify(categories));
+}
 
 // Khởi tạo trang ban đầu
 renderCategories();

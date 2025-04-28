@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quản lý bài test</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="/PROJECT/css/test-manager.css">
+  <link rel="stylesheet" href="../css/test-manager.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -13,9 +13,9 @@
   <nav class="navbar navbar-expand-lg navbar-dark px-4" style="background-color: #520dc2;">
     <a class="navbar-brand fw-bold text-white" href="#">QuizzForge</a>
     <div class="ms-auto d-flex gap-3">
-      <a class="nav-link text-white" href="#">Danh mục</a>
-      <a class="nav-link text-white fw-bold" href="#">Bài test</a>
-      <a class="nav-link text-white" href="#">Đăng xuất</a>
+      <a class="nav-link text-white" href="../pages/category-manager.html">Danh mục</a>
+      <a class="nav-link text-white fw-bold" href="../pages/test-manager.html">Bài test</a>
+      <a class="nav-link text-white" href="../pages/register-login.html">Đăng xuất</a>
     </div>
   </nav>
 
@@ -24,17 +24,17 @@
     <div class="container-test-manager border p-4 rounded shadow bg-white w-100" style="max-width: 1100px;">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="mb-0">Quản lý bài test</h1>
-        <button class="btn btn-primary">Thêm bài test</button>
+        <button class="btn btn-primary" onclick="openAddModal()">Thêm bài test</button>
       </div>
 
       <!-- FILTER BAR -->
-      <div class="d-flex justify-content-end mb-3 gap-2 flex-wrap">
-        <select class="form-select w-auto">
+      <div class="d-flex justify-content-end mb-3 gap-2 flex-wrap" >
+        <select class="form-select w-auto" id="sortSelect">
           <option>Sắp xếp theo</option>
           <option>Tên A-Z</option>
           <option>Số câu tăng dần</option>
         </select>
-        <input type="text" class="form-control w-auto" placeholder="Tìm kiếm theo tên"/>
+        <input type="text" class="form-control w-auto" placeholder="Tìm kiếm theo tên" id="searchInput"/>
       </div>
 
       <!-- TABLE -->
@@ -50,27 +50,16 @@
               <th>Hành động</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td>1</td><td>History Quiz</td><td>📚 Lịch sử</td><td>15</td><td>10 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>2</td><td>Science Challenge</td><td>🧠 Khoa học</td><td>20</td><td>15 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>3</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>4</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>5</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>6</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>7</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
-            <tr><td>8</td><td>Entertainment Trivia</td><td>✏️ Đời sống</td><td>10</td><td>5 min</td><td><button class="btn btn-warning btn-sm me-2">Sửa</button><button class="btn btn-danger btn-sm">Xoá</button></td></tr>
+          <tbody id="testList">
+            
           </tbody>
         </table>
       </div>
 
       <!-- PAGINATION -->
       <nav class="d-flex justify-content-center">
-        <ul class="pagination">
-          <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">»</a></li>
+        <ul class="pagination" id="pagination">
+          
         </ul>
       </nav>
     </div>
@@ -80,5 +69,76 @@
   <footer class="text-center py-3 text-white mt-auto" style="background-color: #520dc2;">
     © 2025 Quiz App. All rights reserved.
   </footer>
+
+  <!-- Modal Thêm Bài Test -->
+  <div id="addTestModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Thêm bài test</h2>
+      <form id="addTestForm">
+        <div class="mb-3">
+          <label for="testName" class="form-label">Tên bài test</label>
+          <input type="text" id="testName" class="form-control" placeholder="Nhập tên bài test" required />
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Danh mục</label>
+          <input type="text" id="category" class="form-control" placeholder="Nhập danh mục" required />
+        </div>
+        <div class="mb-3">
+          <label for="questions" class="form-label">Số câu hỏi</label>
+          <input type="number" id="questions" class="form-control" placeholder="Số câu hỏi" required />
+        </div>
+        <div class="mb-3">
+          <label for="time" class="form-label">Thời gian</label>
+          <input type="text" id="time" class="form-control" placeholder="Thời gian" required />
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Sửa Bài Test -->
+  <div id="editTestModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Sửa bài test</h2>
+      <form id="editTestForm">
+        <div class="mb-3">
+          <label for="editTestName" class="form-label">Tên bài test</label>
+          <input type="text" id="editTestName" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="editCategory" class="form-label">Danh mục</label>
+          <input type="text" id="editCategory" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="editQuestions" class="form-label">Số câu hỏi</label>
+          <input type="number" id="editQuestions" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="editTime" class="form-label">Thời gian</label>
+          <input type="text" id="editTime" class="form-control" required />
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <!-- Modal Xác Nhận Xóa Bài Test -->
+  <div id="deleteTestModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Bạn có chắc chắn muốn xóa bài test này?</h2>
+      <div class="modal-buttons">
+        <button id="cancelDelete" class="btn btn-secondary">Không</button>
+        <button id="confirmDelete" class="btn btn-danger">Có</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/test-manager.js"></script>
 </body>
 </html>

@@ -77,3 +77,11 @@ footer {
 .modal-content button {
   min-width: 80px;
 }
+
+.modal-buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 10px;
+}

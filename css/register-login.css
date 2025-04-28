@@ -102,6 +102,22 @@ body{
 .container.active .sign-in{
     transform: translateX(100%);
 }
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    white-space: nowrap;
+}
+
+.remember-me input {
+    margin-right: 10px; /* Khoảng cách giữa checkbox và chữ */
+}
+
+.remember-me label {
+    font-size: 13px;
+    color: #333; /* Màu chữ có thể thay đổi theo ý muốn */
+    cursor: pointer; /* Con trỏ thay đổi khi hover */
+}
 
 .sign-up{
     left: 0;

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const logoutBtn = document.getElementById('logOut');
+    const logoutBtn = document.getElementsByClassName('logOut')[0] ;
     const logoutModal = document.getElementById('logoutModal');
     const confirmLogout = document.getElementById('confirmLogout');
     const cancelLogout = document.getElementById('cancelLogout');
@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
             logoutModal.classList.remove('hidden'); // Mở modal
+            console.log("on");
+            
         });
     }
 

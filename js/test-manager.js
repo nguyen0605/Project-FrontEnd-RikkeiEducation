@@ -183,6 +183,14 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
     renderTests();
     renderPagination();
   }
+
+  function logOut(){
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('isAdmin');
+    window.location.href = "../pages/register-login.html"; 
+}
   
   // --- Khởi tạo ---
   resetSearchSort();

@@ -147,6 +147,22 @@ function sortQuizzes(order) {
     renderPagination();
 }
 
+function setupAuth() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+    if (isLoggedIn) {
+        if (isAdmin) {
+            window.location.href = "../pages/category-manager.html";
+        } else {
+            window.location.href = "../pages/home.html";
+        }
+    } else {
+        container.classList.add("active"); // Nếu chưa login, mở form đăng ký
+    }
+}
+
+
 
 // Khi tải trang
 renderQuizzes(currentPage);

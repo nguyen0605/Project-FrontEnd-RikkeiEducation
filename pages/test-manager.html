@@ -15,7 +15,7 @@
     <div class="ms-auto d-flex gap-3">
       <a class="nav-link text-white" href="../pages/category-manager.html">Danh mục</a>
       <a class="nav-link text-white fw-bold" href="../pages/test-manager.html">Bài test</a>
-      <a class="nav-link text-white" href="../pages/register-login.html">Đăng xuất</a>
+      <a class="nav-link text-white logOut" href="#" >Đăng xuất</a>
     </div>
   </nav>
 
@@ -128,17 +128,19 @@
     </div>
   </div>
 
-    <!-- Modal Xác Nhận Xóa Bài Test -->
-  <div id="deleteTestModal" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Bạn có chắc chắn muốn xóa bài test này?</h2>
-      <div class="modal-buttons">
-        <button id="cancelDelete" class="btn btn-secondary">Không</button>
-        <button id="confirmDelete" class="btn btn-danger">Có</button>
+    <!-- Modal xác nhận Đăng xuất -->
+    <div id="logoutModal" class="modal-overlay hidden">
+      <div class="modal-box">
+        <p>Bạn có chắc chắn muốn đăng xuất?</p>
+        <div class="modal-buttons">
+          <button id="confirmLogout" class="btn btn-danger">Có</button>
+          <button id="cancelLogout" class="btn btn-secondary">Không</button>
+        </div>
       </div>
     </div>
-  </div>
 
+  <script src="../js/auth.js"></script> 
   <script src="../js/test-manager.js"></script>
+  <script src="../js/logOut.js"></script> 
 </body>
 </html>

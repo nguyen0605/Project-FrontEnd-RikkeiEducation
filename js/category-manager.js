@@ -176,6 +176,16 @@ function saveCategoriesToLocalStorage() {
   localStorage.setItem('categories', JSON.stringify(categories));
 }
 
+function logOut(){
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('isAdmin');
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('isAdmin');
+        window.location.href = "../pages/register-login.html"; 
+}
+
+
 // Khởi tạo trang ban đầu
 renderCategories();
 renderPagination();
+

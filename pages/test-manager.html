@@ -33,6 +33,7 @@
           <option>Sắp xếp theo</option>
           <option>Tên A-Z</option>
           <option>Số câu tăng dần</option>
+          <option>Thời gian</option>
         </select>
         <input type="text" class="form-control w-auto" placeholder="Tìm kiếm theo tên" id="searchInput"/>
       </div>
@@ -71,33 +72,37 @@
   </footer>
 
   <!-- Modal Thêm Bài Test -->
-  <div id="addTestModal" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Thêm bài test</h2>
-      <form id="addTestForm">
-        <div class="mb-3">
-          <label for="testName" class="form-label">Tên bài test</label>
-          <input type="text" id="testName" class="form-control" placeholder="Nhập tên bài test" required />
-        </div>
-        <div class="mb-3">
-          <label for="category" class="form-label">Danh mục</label>
-          <input type="text" id="category" class="form-control" placeholder="Nhập danh mục" required />
-        </div>
-        <div class="mb-3">
-          <label for="questions" class="form-label">Số câu hỏi</label>
-          <input type="number" id="questions" class="form-control" placeholder="Số câu hỏi" required />
-        </div>
-        <div class="mb-3">
-          <label for="time" class="form-label">Thời gian</label>
-          <input type="text" id="time" class="form-control" placeholder="Thời gian" required />
-        </div>
-        <div class="d-flex justify-content-end gap-2">
-          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Hủy</button>
-          <button type="submit" class="btn btn-primary">Lưu</button>
-        </div>
-      </form>
-    </div>
+<div id="addTestModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Thêm bài test</h2>
+    <form id="addTestForm">
+      <div class="mb-3">
+        <label for="testName" class="form-label">Tên bài test</label>
+        <input type="text" id="testName" class="form-control" placeholder="Nhập tên bài test" required />
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">Danh mục</label>
+        <select id="category" class="form-control" required>
+          <option value="">Chọn danh mục</option> <!-- Mặc định chọn -->
+          <!-- Các option danh mục sẽ được thêm từ JavaScript -->
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="questions" class="form-label">Số câu hỏi</label>
+        <input type="number" id="questions" class="form-control" placeholder="Số câu hỏi" required />
+      </div>
+      <div class="mb-3">
+        <label for="time" class="form-label">Thời gian</label>
+        <input type="text" id="time" class="form-control" placeholder="Thời gian" required />
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Hủy</button>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
   </div>
+</div>
+
 
   <!-- Modal Sửa Bài Test -->
   <div id="editTestModal" class="modal-overlay">
@@ -125,6 +130,16 @@
           <button type="submit" class="btn btn-primary">Lưu</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div id="deleteTestModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h2>Bạn có chắc chắn muốn xóa bài test này?</h2>
+      <div class="modal-buttons">
+        <button id="confirmDelete" class="btn btn-danger">Có</button>
+        <button id="cancelDelete" class="btn btn-secondary">Không</button>
+      </div>
     </div>
   </div>
 

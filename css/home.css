@@ -5,6 +5,9 @@ body {
     padding: 0;
   }
   .navbar{
+    position: sticky;
+    top: 0; /* Đặt thanh điều hướng ở vị trí trên cùng */
+    z-index: 9999; /* Đảm bảo navbar luôn nằm trên các phần tử khác */
     display: flex;
     justify-content: space-between;
   }

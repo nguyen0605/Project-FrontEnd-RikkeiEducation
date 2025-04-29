@@ -1,12 +1,14 @@
 let tests = JSON.parse(localStorage.getItem('tests')) || [
-    { id: 1, name: "History Quiz", category: "📚 Lịch sử", questions: 15, time: "10 min" },
-    { id: 2, name: "Science Challenge", category: "🧪 Khoa học", questions: 20, time: "15 min" },
-    { id: 3, name: "Entertainment Trivia", category: "✏️ Đời sống", questions: 10, time: "5 min" },
-    { id: 4, name: "Math Challenge", category: "📐 Toán học", questions: 12, time: "8 min" },
-    { id: 5, name: "Geography Test", category: "🌍 Địa lý", questions: 18, time: "12 min" },
-    { id: 6, name: "History Quiz", category: "📚 Lịch sử", questions: 15, time: "10 min" },
-    { id: 7, name: "Science Challenge", category: "🧪 Khoa học", questions: 20, time: "15 min" },
-    { id: 8, name: "Entertainment Trivia", category: "✏️ Đời sống", questions: 10, time: "5 min" }
+  { id: 1, name: "History Quiz", category: "📚 Lịch sử", questions: 15, time: "10 min" },
+  { id: 2, name: "Science Challenge", category: "🧪 Khoa học", questions: 20, time: "15 min" },
+  { id: 3, name: "Entertainment Trivia", category: "✏️ Đời sống", questions: 10, time: "5 min" },
+  { id: 4, name: "Math Challenge", category: "📐 Toán học", questions: 12, time: "8 min" },
+  { id: 5, name: "Geography Test", category: "🌍 Địa lý", questions: 18, time: "12 min" },
+  { id: 6, name: "Programming Test", category: "💻 Lập trình", questions: 25, time: "20 min" },
+  { id: 7, name: "English Vocabulary", category: "📖 Tiếng Anh", questions: 30, time: "15 min" },
+  { id: 8, name: "General Knowledge", category: "🧠 Kiến thức chung", questions: 20, time: "10 min" },
+  { id: 9, name: "Literature Test", category: "📚 Văn học", questions: 25, time: "18 min" },
+  { id: 10, name: "Physics Quiz", category: "🧪 Khoa học", questions: 15, time: "10 min" }
   ];
   
   let itemsPerPage = 5;
@@ -73,7 +75,8 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
   
   // --- Modal thêm bài test ---
   function openAddModal() {
-    document.getElementById('addTestModal').classList.add('open');
+    const modal = document.getElementById('addTestModal');
+    modal.classList.add('open');
   }
   
   function closeAddModal() {
@@ -82,20 +85,74 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
   
   document.getElementById('addTestForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    
     const name = document.getElementById('testName').value.trim();
     const category = document.getElementById('category').value.trim();
     const questions = parseInt(document.getElementById('questions').value);
     const time = document.getElementById('time').value.trim();
+  
+    const errorMessage = document.getElementById('error-message');
+    
+    // Xóa lỗi cũ nếu có
+    if (errorMessage) {
+      errorMessage.remove();
+    }
+  
+    // Kiểm tra nếu tên bài test trống
+    if (!name) {
+      showError('Tên bài test không được để trống');
+      return;
+    }
+  
+    // Kiểm tra nếu bài test đã tồn tại
+    const testExists = tests.some(test => test.name.toLowerCase() === name.toLowerCase());
+    if (testExists) {
+      showError('Bài test này đã tồn tại. Vui lòng chọn tên khác');
+      return;
+    }
+  
+    // Kiểm tra nếu danh mục chưa được chọn
+    if (!category) {
+      showError('Vui lòng chọn danh mục');
+      return;
+    }
   
     // Tạo ID mới: max id trong mảng + 1
     const newId = tests.length > 0 ? Math.max(...tests.map(t => t.id)) + 1 : 1;
   
     const newTest = { id: newId, name, category, questions, time };
     tests.push(newTest);
+  
     saveTests();
     closeAddModal();
     resetSearchSort();
   });
+  
+  // Hàm hiển thị lỗi
+  function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.id = 'error-message';
+    errorDiv.style.color = 'red';
+    errorDiv.style.fontSize = '14px';
+    errorDiv.textContent = message;
+  
+    document.getElementById('testName').insertAdjacentElement('afterend', errorDiv);
+  }
+  
+  // Hàm lấy danh mục từ localStorage và hiển thị trong select
+  function populateCategorySelect() {
+    const categorySelect = document.getElementById('category');
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
+  
+    categories.forEach(category => {
+      const option = document.createElement('option');
+      option.value = category.name; // Lưu id danh mục
+      option.textContent = category.name; // Hiển thị tên danh mục
+      categorySelect.appendChild(option);
+    });
+  }
+  
+  
   
   // --- Modal sửa bài test ---
   function openEditModal(id) {
@@ -165,6 +222,12 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
       currentTests.sort((a, b) => a.name.localeCompare(b.name));
     } else if (value === "Số câu tăng dần") {
       currentTests.sort((a, b) => a.questions - b.questions);
+    } else if (value === "Thời gian"){
+      currentTests.sort((a, b) => {
+        const timeA = parseInt(a.time.split(' ')[0]);
+        const timeB = parseInt(b.time.split(' ')[0]);
+        return timeA - timeB; // Sắp xếp theo thời gian tăng dần
+      });
     }
     currentPage = 1;
     renderTests();
@@ -183,15 +246,8 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
     renderTests();
     renderPagination();
   }
-
-  function logOut(){
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('isAdmin');
-    sessionStorage.removeItem('isLoggedIn');
-    sessionStorage.removeItem('isAdmin');
-    window.location.href = "../pages/register-login.html"; 
-}
   
   // --- Khởi tạo ---
   resetSearchSort();
+  populateCategorySelect();
   

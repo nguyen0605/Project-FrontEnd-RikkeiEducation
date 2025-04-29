@@ -44,6 +44,13 @@ footer {
   font-weight: bold;
 }
 
+/* Thông báo lỗi dưới ô input */
+#error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 /* Modal Overlay */
 .modal-overlay {
   display: none; /* Ẩn modal mặc định */
@@ -55,7 +62,7 @@ footer {
   background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 10;
 }
 
 /* Modal Content */
@@ -98,7 +105,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10;
 }
 
 /* Modal box */

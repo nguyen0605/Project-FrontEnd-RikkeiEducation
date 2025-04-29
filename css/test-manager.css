@@ -17,8 +17,8 @@ button.btn-sm {
     font-weight: bold;
   }
 
- /* Modal Overlay */
-/* Modal Overlay */
+/* ============================= */
+/* General modal styles */
 .modal-overlay {
   display: none; /* Ẩn modal mặc định */
   position: fixed;
@@ -29,11 +29,100 @@ button.btn-sm {
   background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 9999; /* Đảm bảo modal hiện lên trên cùng */
 }
 
- /* Modal overlay */
- [id="logoutModal"]{
+/* ============================= */
+/* Modal Thêm Bài Test */
+#addTestModal .modal-content {
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  width: 500px; /* Đặt độ rộng vừa phải */
+  max-width: 90%; /* Đảm bảo không tràn màn hình */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+/* Modal Sửa Bài Test */
+#editTestModal .modal-content {
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+/* Modal Xóa Bài Test */
+#deleteTestModal .modal-content {
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* ============================= */
+/* Các phần tử modal */
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* ============================= */
+/* Nút trong modal */
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Cài đặt nút trong các modal */
+.modal-buttons button {
+  min-width: 100px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+#confirmLogout {
+  background-color: #d9534f;
+  color: white;
+}
+
+#cancelLogout {
+  background-color: #5bc0de;
+  color: white;
+}
+
+#confirmDelete {
+  background-color: #d9534f;
+  color: white;
+}
+
+#cancelDelete {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* ============================= */
+/* Khi modal mở ra */
+.modal-overlay.open {
+  display: flex;
+}
+
+/* Modal overlay */
+[id="logoutModal"]{
   position: fixed;
   top: 0;
   left: 0;
@@ -43,7 +132,7 @@ button.btn-sm {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10;
 }
 
 /* Modal box */
@@ -56,7 +145,7 @@ button.btn-sm {
 }
 
 /* Nút trong modal */
-.modal-buttons {
+.modal-box button{
   margin-top: 20px;
   display: flex;
   gap: 20px;
@@ -67,6 +156,5 @@ button.btn-sm {
 .hidden {
   display: none;
 }
-
 
   

@@ -1,16 +1,19 @@
 // Dữ liệu danh mục giả lập
 let categories = JSON.parse(localStorage.getItem('categories')) || [
-  { id: 1, name: "📚 Lịch sử" },
-  { id: 2, name: "🧪 Khoa học" },
-  { id: 3, name: "✏️ Giải trí" },
-  { id: 4, name: "🏡 Đời sống" },
-  { id: 5, name: "📚 Lịch sử" },
-  { id: 6, name: "🧪 Khoa học" },
-  { id: 7, name: "✏️ Giải trí" },
-  { id: 8, name: "🏡 Đời sống" },
-  { id: 9, name: "📚 Lịch sử" },
-  { id: 10, name: "🧪 Khoa học" }
-];
+    { id: 1, name: "📚 Lịch sử"},
+    { id: 2, name: "🧪 Khoa học"},
+    { id: 3, name: "📚 Văn học"},
+    { id: 4, name: "✏️ Giải trí"},
+    { id: 5, name: "📐 Toán học"},
+    { id: 6, name: "🌍 Địa lý"},
+    { id: 7, name: "📖 Tiếng Anh"},
+    { id: 8, name: "💻 Lập trình"},
+    { id: 9, name: "🎨 Nghệ thuật"},
+    { id: 10, name: "🎮 Trò chơi"},
+    { id: 11, name: "💡 Sáng tạo"},
+    { id: 12, name: "✏️ Đời sống"},
+    { id: 13, name: "🧠 Kiến thức chung"},
+]
 
 const itemsPerPage = 5; // Số lượng mục trên mỗi trang
 let currentPage = 1; // Trang hiện tại
@@ -125,20 +128,72 @@ document.getElementById('editCategoryForm').addEventListener('submit', function 
 
 // Hàm xử lý thêm danh mục
 document.getElementById('addCategoryForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const categoryName = document.getElementById('categoryName').value;
+  e.preventDefault(); // Ngừng hành động mặc định của form
 
+  const categoryName = document.getElementById('categoryName').value.trim();
+  const errorMessage = document.getElementById('error-message'); // Lấy phần tử hiển thị lỗi
+
+  // Xóa lỗi cũ nếu có
+  if (errorMessage) {
+    errorMessage.remove();
+  }
+
+  // Kiểm tra nếu tên danh mục trống
+  if (!categoryName) {
+    // Tạo thông báo lỗi
+    const errorDiv = document.createElement('div');
+    errorDiv.id = 'error-message';
+    errorDiv.style.color = 'red';
+    errorDiv.style.fontSize = '14px';
+    errorDiv.textContent = 'Tên danh mục không được để trống';
+
+    // Thêm thông báo lỗi dưới ô input
+    document.getElementById('categoryName').insertAdjacentElement('afterend', errorDiv);
+    return;
+  }
+
+  // Loại bỏ icon để so sánh tên
+  const categoryNameWithoutIcon = categoryName.replace(/^[^\w\s]+/g, '').trim(); // Loại bỏ icon (dấu đầu tiên không phải chữ)
+
+  // Kiểm tra nếu tên danh mục đã tồn tại
+  const categoryExists = categories.some(category => {
+    const categoryNameWithoutIconExisting = category.name.replace(/^[^\w\s]+/g, '').trim();
+    return categoryNameWithoutIconExisting.toLowerCase() === categoryNameWithoutIcon.toLowerCase();
+  });
+
+  if (categoryExists) {
+    // Tạo thông báo lỗi
+    const errorDiv = document.createElement('div');
+    errorDiv.id = 'error-message';
+    errorDiv.style.color = 'red';
+    errorDiv.style.fontSize = '14px';
+    errorDiv.textContent = 'Danh mục này đã tồn tại. Vui lòng chọn tên khác.';
+
+    // Thêm thông báo lỗi dưới ô input
+    document.getElementById('categoryName').insertAdjacentElement('afterend', errorDiv);
+    return;
+  }
+
+  // Danh sách các icon để gán ngẫu nhiên
+  const icons = ["📚", "🧪", "✏️", "📐", "🌍", "📖", "💻", "🎨", "🎮", "💡","🧠"];
+
+  // Lấy icon ngẫu nhiên từ mảng icons
+  const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+
+  // Tạo danh mục mới
   const newCategory = {
-    id: categories.length + 1,
-    name: categoryName
+    id: categories.length + 1, // Tạo ID tự động
+    name: randomIcon + " " + categoryName // Thêm icon vào tên danh mục
   };
 
-  categories.push(newCategory);
-  saveCategoriesToLocalStorage();
-  closeAddModal();
-  renderCategories();
-  renderPagination();
+  categories.push(newCategory); // Thêm vào mảng danh mục
+  saveCategoriesToLocalStorage(); // Lưu danh mục vào localStorage
+  closeAddModal(); // Đóng modal thêm danh mục
+  renderCategories(); // Render lại danh sách danh mục
+  renderPagination(); // Render lại phân trang
 });
+
+
 
 // Modal xóa danh mục
 function openDeleteModal(id) {
@@ -175,15 +230,6 @@ function closeDeleteModal() {
 function saveCategoriesToLocalStorage() {
   localStorage.setItem('categories', JSON.stringify(categories));
 }
-
-function logOut(){
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('isAdmin');
-        sessionStorage.removeItem('isLoggedIn');
-        sessionStorage.removeItem('isAdmin');
-        window.location.href = "../pages/register-login.html"; 
-}
-
 
 // Khởi tạo trang ban đầu
 renderCategories();

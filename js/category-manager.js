@@ -95,9 +95,16 @@ function closeAddModal() {
 }
 
 // Hàm mở modal sửa danh mục
-function openEditModal(id, name) {
+function openEditModal(id) {
   const modal = document.getElementById('editCategoryModal');
-  document.getElementById('editCategoryName').value = name;
+  const category = categories.find(c => c.id === id);
+  
+  if (category) {
+      // Điền thông tin của danh mục vào các ô input trong modal
+      document.getElementById('editCategoryName').value = category.name.replace(/^[^\w\s]+/g, '').trim(); // Tên danh mục (loại bỏ emoji khi hiển thị)
+      document.getElementById('editEmojiInput').value = category.name.split(' ')[0]; // Lấy emoji (phần đầu tiên trong tên danh mục)
+  }
+  
   modal.classList.add('open');
   modal.dataset.categoryId = id;
 }
@@ -114,10 +121,11 @@ document.getElementById('editCategoryForm').addEventListener('submit', function 
   const modal = document.getElementById('editCategoryModal');
   const categoryId = modal.dataset.categoryId;
   const categoryName = document.getElementById('editCategoryName').value;
+  const emojiInput = document.getElementById('editEmojiInput').value;
 
   const category = categories.find(c => c.id === parseInt(categoryId));
   if (category) {
-    category.name = categoryName; // Cập nhật tên danh mục
+    category.name = emojiInput + " " + categoryName; // Cập nhật tên danh mục
   }
 
   saveCategoriesToLocalStorage();
@@ -131,25 +139,12 @@ document.getElementById('addCategoryForm').addEventListener('submit', function (
   e.preventDefault(); // Ngừng hành động mặc định của form
 
   const categoryName = document.getElementById('categoryName').value.trim();
+  const emojiInput = document.getElementById('emojiInput').value.trim();
   const errorMessage = document.getElementById('error-message'); // Lấy phần tử hiển thị lỗi
 
   // Xóa lỗi cũ nếu có
   if (errorMessage) {
     errorMessage.remove();
-  }
-
-  // Kiểm tra nếu tên danh mục trống
-  if (!categoryName) {
-    // Tạo thông báo lỗi
-    const errorDiv = document.createElement('div');
-    errorDiv.id = 'error-message';
-    errorDiv.style.color = 'red';
-    errorDiv.style.fontSize = '14px';
-    errorDiv.textContent = 'Tên danh mục không được để trống';
-
-    // Thêm thông báo lỗi dưới ô input
-    document.getElementById('categoryName').insertAdjacentElement('afterend', errorDiv);
-    return;
   }
 
   // Loại bỏ icon để so sánh tên
@@ -174,16 +169,10 @@ document.getElementById('addCategoryForm').addEventListener('submit', function (
     return;
   }
 
-  // Danh sách các icon để gán ngẫu nhiên
-  const icons = ["📚", "🧪", "✏️", "📐", "🌍", "📖", "💻", "🎨", "🎮", "💡","🧠"];
-
-  // Lấy icon ngẫu nhiên từ mảng icons
-  const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-
   // Tạo danh mục mới
   const newCategory = {
     id: categories.length + 1, // Tạo ID tự động
-    name: randomIcon + " " + categoryName // Thêm icon vào tên danh mục
+    name: emojiInput + " " + categoryName // Thêm icon vào tên danh mục
   };
 
   categories.push(newCategory); // Thêm vào mảng danh mục
@@ -232,6 +221,7 @@ function saveCategoriesToLocalStorage() {
 }
 
 // Khởi tạo trang ban đầu
+saveCategoriesToLocalStorage();
 renderCategories();
 renderPagination();
 

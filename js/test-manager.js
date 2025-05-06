@@ -1,15 +1,69 @@
 let tests = JSON.parse(localStorage.getItem('tests')) || [
-  { id: 1, name: "History Quiz", category: "📚 Lịch sử", questions: 15, time: "10 min" },
-  { id: 2, name: "Science Challenge", category: "🧪 Khoa học", questions: 20, time: "15 min" },
-  { id: 3, name: "Entertainment Trivia", category: "✏️ Đời sống", questions: 10, time: "5 min" },
-  { id: 4, name: "Math Challenge", category: "📐 Toán học", questions: 12, time: "8 min" },
-  { id: 5, name: "Geography Test", category: "🌍 Địa lý", questions: 18, time: "12 min" },
-  { id: 6, name: "Programming Test", category: "💻 Lập trình", questions: 25, time: "20 min" },
-  { id: 7, name: "English Vocabulary", category: "📖 Tiếng Anh", questions: 30, time: "15 min" },
-  { id: 8, name: "General Knowledge", category: "🧠 Kiến thức chung", questions: 20, time: "10 min" },
-  { id: 9, name: "Literature Test", category: "📚 Văn học", questions: 25, time: "18 min" },
-  { id: 10, name: "Physics Quiz", category: "🧪 Khoa học", questions: 15, time: "10 min" }
-  ];
+  {
+    id: 1,
+    name: "History Quiz",
+    category: "📚 Lịch sử",
+    questions: [
+      { id: 1, question: "What is the capital of France?", answers: ["Paris", "London", "Rome", "Berlin"], correctAnswer: "Paris"},
+      { id: 2, question: "Who was the first president of the United States?", answers: ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John Adams"], correctAnswer: "George Washington" },
+      { id: 3, question: "In which year did World War II end?", answers: ["1945", "1939", "1925", "1950"], correctAnswer: "1945" },
+      { id: 4, question: "Who wrote 'The Iliad'?", answers: ["Homer", "Shakespeare", "Dante", "Virgil"], correctAnswer: "Homer" },
+      { id: 5, question: "Which country was the first to land on the Moon?", answers: ["USA", "Soviet Union", "China", "India"], correctAnswer: "USA" }
+    ],
+    time: "10 min"
+  },
+  {
+    id: 2,
+    name: "Science Challenge",
+    category: "🧪 Khoa học",
+    questions: [
+      { id: 1, question: "What is the chemical symbol for water?", answers: ["H2O", "O2", "CO2", "N2"], correctAnswer: "H2O" },
+      { id: 2, question: "What is the powerhouse of the cell?", answers: ["Mitochondria", "Nucleus", "Ribosome", "Endoplasmic Reticulum"], correctAnswer: "Mitochondria" },
+      { id: 3, question: "Who is the father of modern physics?", answers: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"], correctAnswer: "Albert Einstein" },
+      { id: 4, question: "What planet is known as the Red Planet?", answers: ["Mars", "Earth", "Jupiter", "Saturn"], correctAnswer: "Mars" },
+      { id: 5, question: "What is the chemical symbol for gold?", answers: ["Au", "Ag", "Fe", "Pb"], correctAnswer: "Au" }
+    ],
+    time: "15 min"
+  },
+  {
+    id: 3,
+    name: "Entertainment Trivia",
+    category: "✏️ Đời sống",
+    questions: [
+      { id: 1, question: "Who won the Oscar for Best Actor in 2020?", answers: ["Joaquin Phoenix", "Leonardo DiCaprio", "Brad Pitt", "Tom Hanks"], correctAnswer: "Joaquin Phoenix" },
+      { id: 4, question: "Which TV show features the character Jon Snow?", answers: ["Game of Thrones", "Breaking Bad", "Stranger Things", "The Witcher"], correctAnswer: "Game of Thrones" },
+      { id: 5, question: "Who played the character of Jack Dawson in Titanic?", answers: ["Leonardo DiCaprio", "Johnny Depp", "Brad Pitt", "Tom Cruise"], correctAnswer: "Leonardo DiCaprio" }
+    ],
+    time: "5 min"
+  },
+  {
+    id: 4,
+    name: "Math Challenge",
+    category: "📐 Toán học",
+    questions: [
+      { id: 1, question: "What is 10 + 15?", answers: ["25", "20", "30", "35"], correctAnswer: "25" },
+      { id: 2, question: "What is the square root of 64?", answers: ["8", "6", "10", "12"], correctAnswer: "8" },
+      { id: 3, question: "What is 9 * 8?", answers: ["72", "64", "80", "100"], correctAnswer: "72" },
+      { id: 4, question: "What is 100 / 5?", answers: ["20", "25", "30", "40"], correctAnswer: "20" },
+      { id: 5, question: "What is 15 - 6?", answers: ["9", "8", "7", "10"], correctAnswer: "9" }
+    ],
+    time: "8 min"
+  },
+  {
+    id: 5,
+    name: "Geography Test",
+    category: "🌍 Địa lý",
+    questions: [
+      { id: 1, question: "What is the capital of Australia?", answers: ["Canberra", "Sydney", "Melbourne", "Perth"], correctAnswer: "Canberra" },
+      { id: 2, question: "Which country has the most population?", answers: ["China", "India", "USA", "Indonesia"], correctAnswer: "China" },
+      { id: 3, question: "What is the longest river in the world?", answers: ["Amazon River", "Nile River", "Yangtze River", "Mississippi River"], correctAnswer: "Amazon River" },
+      { id: 4, question: "Which continent is known as the 'Dark Continent'?", answers: ["Africa", "Asia", "Europe", "Australia"], correctAnswer: "Africa" },
+    ],
+    time: "12 min"
+  },
+];
+
+
   
   let itemsPerPage = 5;
   let currentPage = 1;
@@ -30,7 +84,7 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
         <td>${test.id}</td>
         <td>${test.name}</td>
         <td>${test.category}</td>
-        <td>${test.questions}</td>
+        <td>${test.questions.length}</td>
         <td>${test.time}</td>
         <td>
           <button class="btn btn-warning btn-sm me-2" onclick="openEditModal(${test.id})">Sửa</button>
@@ -75,69 +129,10 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
   
   // --- Modal thêm bài test ---
   function openAddModal() {
-    const modal = document.getElementById('addTestModal');
-    modal.classList.add('open');
+    localStorage.setItem('isEditMode', 'false'); // Đặt trạng thái là "thêm"
+    window.location.href= "question-manager.html";
   }
-  
-  function closeAddModal() {
-    document.getElementById('addTestModal').classList.remove('open');
-  }
-  
-  document.getElementById('addTestForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('testName').value.trim();
-    const category = document.getElementById('category').value.trim();
-    const questions = parseInt(document.getElementById('questions').value);
-    const time = document.getElementById('time').value.trim();
-  
-    const errorMessage = document.getElementById('error-message');
-    
-    // Xóa lỗi cũ nếu có
-    if (errorMessage) {
-      errorMessage.remove();
-    }
-  
-    // Kiểm tra nếu tên bài test trống
-    if (!name) {
-      showError('Tên bài test không được để trống');
-      return;
-    }
-  
-    // Kiểm tra nếu bài test đã tồn tại
-    const testExists = tests.some(test => test.name.toLowerCase() === name.toLowerCase());
-    if (testExists) {
-      showError('Bài test này đã tồn tại. Vui lòng chọn tên khác');
-      return;
-    }
-  
-    // Kiểm tra nếu danh mục chưa được chọn
-    if (!category) {
-      showError('Vui lòng chọn danh mục');
-      return;
-    }
-  
-    // Tạo ID mới: max id trong mảng + 1
-    const newId = tests.length > 0 ? Math.max(...tests.map(t => t.id)) + 1 : 1;
-  
-    const newTest = { id: newId, name, category, questions, time };
-    tests.push(newTest);
-  
-    saveTests();
-    closeAddModal();
-    resetSearchSort();
-  });
-  
-  // Hàm hiển thị lỗi
-  function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.id = 'error-message';
-    errorDiv.style.color = 'red';
-    errorDiv.style.fontSize = '14px';
-    errorDiv.textContent = message;
-  
-    document.getElementById('testName').insertAdjacentElement('afterend', errorDiv);
-  }
+
   
   // Hàm lấy danh mục từ localStorage và hiển thị trong select
   function populateCategorySelect() {
@@ -156,38 +151,11 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
   
   // --- Modal sửa bài test ---
   function openEditModal(id) {
-    const modal = document.getElementById('editTestModal');
-    const test = tests.find(t => t.id === id);
-    if (!test) return;
-  
-    document.getElementById('editTestName').value = test.name;
-    document.getElementById('editCategory').value = test.category;
-    document.getElementById('editQuestions').value = test.questions;
-    document.getElementById('editTime').value = test.time;
-  
-    modal.classList.add('open');
-    modal.dataset.id = id;
+    localStorage.setItem('isEditMode', 'true'); // Đặt trạng thái là "sửa"
+    localStorage.setItem('currentTestId', id); // Lưu ID bài test
+    window.location.href = `question-manager.html?id=${id}`;
   }
   
-  function closeEditModal() {
-    document.getElementById('editTestModal').classList.remove('open');
-  }
-  
-  document.getElementById('editTestForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const id = parseInt(document.getElementById('editTestModal').dataset.id);
-    const test = tests.find(t => t.id === id);
-    if (!test) return;
-  
-    test.name = document.getElementById('editTestName').value;
-    test.category = document.getElementById('editCategory').value;
-    test.questions = parseInt(document.getElementById('editQuestions').value);
-    test.time = document.getElementById('editTime').value;
-  
-    saveTests();
-    closeEditModal();
-    resetSearchSort();
-  });
   
   // --- Modal xóa bài test ---
   function openDeleteModal(id) {
@@ -221,7 +189,7 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
     if (value === "Tên A-Z") {
       currentTests.sort((a, b) => a.name.localeCompare(b.name));
     } else if (value === "Số câu tăng dần") {
-      currentTests.sort((a, b) => a.questions - b.questions);
+      currentTests.sort((a, b) => a.questions.length - b.questions.length);
     } else if (value === "Thời gian"){
       currentTests.sort((a, b) => {
         const timeA = parseInt(a.time.split(' ')[0]);
@@ -248,6 +216,7 @@ let tests = JSON.parse(localStorage.getItem('tests')) || [
   }
   
   // --- Khởi tạo ---
+  saveTests();
   resetSearchSort();
   populateCategorySelect();
   
